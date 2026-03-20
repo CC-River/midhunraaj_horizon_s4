@@ -21,15 +21,27 @@ float time(float dist, float u, float a, float v){
 }
 
 int main(){
-    float a,b,c,d, vel, accl, speed;
+    float a,b,c,d, vel, accl, speed, dist, t;
     cout<<"Enter x1 y1 and x2 y2: ";
     cin>>a>>b>>c>>d;
-    float dist = distance(a,b,c,d);
-    cout<<"The distance is: "<<dist<<endl;
+    if(a==b && c==d){
+        cout<<"Same coordinates 0 distance";
+        return 1;
+    }
+    else{
+        dist = distance(a,b,c,d);
+        cout<<"The distance is: "<<dist<<endl;
+    }
 
     cout<<"Enter initial velocity, acceleration and max speed: ";
     cin>>vel>>accl>>speed;
-    float t = time(dist, vel, accl, speed);
+    if(accl<0){
+        cout<<"-ve Acceleration";
+        return 1;
+    }
+    else{
+        t = time(dist, vel, accl, speed);
+    }
     cout << "Time to reach destination: " <<t<<"s"<< endl;
 
     return 0;
