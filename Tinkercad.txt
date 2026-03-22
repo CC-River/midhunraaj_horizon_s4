@@ -1,0 +1,34 @@
+#include <Servo.h>
+
+Servo myServo;
+
+const int POT_PIN = A0;
+const int SERVO_PIN = 9;
+const int LED_PIN = 13;
+const int SAFE_LIMIT = 68;
+
+void setup() {
+  myServo.attach(SERVO_PIN);
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int potValue = analogRead(POT_PIN);
+  int requestedAngle = map(potValue, 0, 1023, 0, 180);
+
+  if (requestedAngle > SAFE_LIMIT) {
+    myServo.write(SAFE_LIMIT);
+    digitalWrite(LED_PIN, HIGH);
+    Serial.print("LIMIT EXCEEDED ");
+    Serial.println("LED ON");
+  } else {
+    myServo.write(requestedAngle);
+    digitalWrite(LED_PIN, LOW);
+    Serial.print("Angle: ");
+    Serial.print(requestedAngle);
+    Serial.println(" deg  LED OFF");
+  }
+
+  delay(20);
+}
